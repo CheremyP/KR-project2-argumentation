@@ -1,0 +1,21 @@
+{
+    "Arguments" : {
+        "0": "We should eat healthy food.",
+        "1": "Pizza is delicious but unhealthy.",
+        "2": "Salads are a good choice for a healthy meal.",
+        "3": "Time is limited, and cooking a proper meal takes too long.",
+        "4": "Fast food is a quick and convenient option for a busy schedule.",
+        "5": "Fast food is often high in calories and low in nutritional value.",
+        "6": "We should prioritize health over convenience."
+    },
+    
+    "Attack Relations" : [
+        ["0","1"], ["0","2"],
+        ["1","2"], ["1","5"],
+        ["2","4"],
+        ["3","4"],
+        ["4","5"],
+        ["5","2"], ["5","6"],
+        ["6","0"]
+    ]
+}

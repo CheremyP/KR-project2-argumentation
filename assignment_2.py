@@ -80,14 +80,3 @@ if proponent_wins and count == 0:
 elif proponent_wins and count > 0:
     print(f"Proponent plays {proponent_argument} with argument '{arguments[str(proponent_argument)]}'")
     print("Proponent wins!")
-
-
-    
-
-    
-    
-
-    
-
-
-

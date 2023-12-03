@@ -43,5 +43,5 @@ The game concludes with the determination of a winner based on the following con
 ## Example Usage
 
 ```bash
-python main.py
+python assingment_2.py
 ```
