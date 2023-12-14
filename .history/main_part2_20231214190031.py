@@ -2,6 +2,12 @@ import json
 import sys, os
 
 
+with open("example_AF.json", encoding="utf-8") as j_file:
+    framework = json.load(j_file)
+
+framework
+
+
 def find_conflict_free_set(arguments, attacks):
     conflict_free_set = set()
     new_args = set()
@@ -21,6 +27,7 @@ def find_conflict_free_set(arguments, attacks):
     
     return conflict_free_set
 
+# find_conflict_free_set(A, R)
 
 def is_defended(argument, attacks):
     #Find attacks:
@@ -45,6 +52,11 @@ def find_admissible_semantics(arguments, attacks):
     admissible_set = {x for x in conflict_free_set if not any(undefended_argument in x for undefended_argument in undefended_set)}
 
     return admissible_set
+
+
+
+
+args = set(["a", "b", "c", "d", "e"])
 
 
 
