@@ -16,14 +16,14 @@ def get_user_input(possible_arguments, oponent_used_arguments):
     
     
 def main(framework):
-    arguments = framework["Arguments"]
-    print("Arguments")
-    for number, arg in arguments.items():
-        print(f"{number}: {arg}")
-    print("\n")
+    try:
+        attacks = framework["Attack Relations"]
+    except Exception as e:
+        print(f"Encountered exception: {e}. Ensure the attack relations in the .json file are called \"Attack Relations\"")
+        sys.exit()
         
-    attacks = framework["Attack Relations"]
     attacks = [[int(x), int(y)] for x,y in attacks] 
+
 
     opponent_wins, proponent_wins = False, False
     proponent_used_arguments = set()
@@ -86,28 +86,47 @@ def main(framework):
     elif proponent_wins and count > 0:
         print(f"Proponent plays {proponent_argument} with argument '{arguments[str(proponent_argument)]}'")
         print("Proponent wins!")
-
         
         
 if __name__ == "__main__":
     # Extract command-line arguments
-    if len(sys.argv) == 2:
+    if len(sys.argv) == 3:
         valid_framework = False
+        valid_argument = False
+        framework_path = sys.argv[1] 
+        argument = sys.argv[2]
+        
         while valid_framework == False:
-            framework_path = sys.argv[1] 
             print(f"Loading framework {framework_path}")
             if not os.path.exists(framework_path):
-                print(f"{framework_path} does not exists. Please try again.")
+                framework_path = input(f"{framework_path} does not exist. Please enter a valid \"framework\".json: ") 
             else:
                 with open(framework_path, encoding="utf-8") as j_file:
                     framework = json.load(j_file)
-                valid_framework = True
+                valid_framework = True     
+                
+        # while not isinstance(argument, int):
+        #     print(f"The claimed argument should be an integer. {argument} is not an integer")
+        #     argument = input("Please input a valid integer:")
+        
 
-
-    elif len(sys.argv) != 2:
+    else:
         print("\nLoading default framework example_framework.json\n")
-        with open("example-argumentation-framework.json", encoding="utf-8") as j_file:
+        with open("example_framework.json", encoding="utf-8") as j_file:
             framework = json.load(j_file)
+            
+    
+    arguments = framework["Arguments"]
+    print("_Arguments_")
+    for number, arg in arguments.items():
+        print(f"{number}: {arg}")
+    print("\n")   
+    
+    all_possible_arguments = [int(x) for x in arguments.keys()]        
+    
+    if len(sys.argv) == 3:
+        while argument not in all_possible_arguments and not isinstance(argument, int):
+            argument = input("Argument needs to be an integer in the set of possible arguments. Please choose a valid argument:")
     
 
     main(framework)

@@ -1,0 +1,24 @@
+{
+    "Arguments" : {
+        "0": "Let's skip the lecture, it is raining.",
+        "1": "Attending the lecture is crucial for understanding the course material.",
+        "2": "We can also watch the lecture online.",
+        "3": "Online learning is not as effective as attending in-person.",
+        "4": "Skipping the lecture occasionally won't significantly impact our understanding.",
+        "5": "Watching online allows for more flexibility in our schedule.",
+        "6": "If we do not go to the lecture, we can have a beer instead."
+    },
+    
+    "Attack Relations" : [
+        ["1", "0"],
+        ["1", "6"],
+        ["2", "1"],
+        ["3", "2"],
+        ["5", "1"],
+        ["1", "5"],
+        ["4", "1"],
+        ["6", "1"],
+        ["4", "3"],
+        ["5", "3"]
+    ]
+}

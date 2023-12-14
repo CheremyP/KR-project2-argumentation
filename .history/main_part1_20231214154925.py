@@ -97,16 +97,17 @@ if __name__ == "__main__":
             framework_path = sys.argv[1] 
             print(f"Loading framework {framework_path}")
             if not os.path.exists(framework_path):
-                print(f"{framework_path} does not exists. Please try again.")
+                framework_path = input(f"{framework_path} does not exist. Please enter a valid \"framework\".json: ")
+                
             else:
                 with open(framework_path, encoding="utf-8") as j_file:
                     framework = json.load(j_file)
                 valid_framework = True
 
 
-    elif len(sys.argv) != 2:
+    else:
         print("\nLoading default framework example_framework.json\n")
-        with open("example-argumentation-framework.json", encoding="utf-8") as j_file:
+        with open("example_framework.json", encoding="utf-8") as j_file:
             framework = json.load(j_file)
     
 

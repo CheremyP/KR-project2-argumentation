@@ -17,11 +17,6 @@ def get_user_input(possible_arguments, oponent_used_arguments):
     
 def main(framework):
     arguments = framework["Arguments"]
-    print("Arguments")
-    for number, arg in arguments.items():
-        print(f"{number}: {arg}")
-    print("\n")
-        
     attacks = framework["Attack Relations"]
     attacks = [[int(x), int(y)] for x,y in attacks] 
 
@@ -38,7 +33,6 @@ def main(framework):
     print(f"Proponent plays {proponent_argument}, with argument '{arguments[str(proponent_argument)]}'")
     count = 0
     while not proponent_wins and not opponent_wins:
-        print('ja')
         # 1. Opponent is allowed to use any argument that attacks arguments used by proponent
         opponent_arguments = {x for x,y in attacks if y in proponent_used_arguments}
         # 1.1. Make copy, since opponent should be allowed to choose argument that is already used by proponent
@@ -52,7 +46,8 @@ def main(framework):
             proponent_wins = True
             break
 
-        opponent_argument = get_user_input(opponent_arguments_copy, opponent_used_arguments) #quits if opponent reuses argument
+        opponent_argument = get_user_input(opponent_arguments_copy, opponent_used_arguments)
+        
         opponent_used_arguments.add(opponent_argument)
 
         # 1.3. Opponent loses if they use an argument that was previously used by proponent (again, this time by choice)
@@ -77,7 +72,8 @@ def main(framework):
         print(f"Proponent plays {proponent_argument} with argument '{arguments[str(proponent_argument)]}'")
         proponent_used_arguments.add(proponent_argument)
         count += 1
-    
+        
+        
     if opponent_wins:
         print(f"Opponent plays {opponent_argument} with argument '{arguments[str(opponent_argument)]}'")
         print("Opponent wins!")
@@ -86,7 +82,6 @@ def main(framework):
     elif proponent_wins and count > 0:
         print(f"Proponent plays {proponent_argument} with argument '{arguments[str(proponent_argument)]}'")
         print("Proponent wins!")
-
         
         
 if __name__ == "__main__":
@@ -105,7 +100,7 @@ if __name__ == "__main__":
 
 
     elif len(sys.argv) != 2:
-        print("\nLoading default framework example_framework.json\n")
+        print("Loading default framework example_framework.json")
         with open("example-argumentation-framework.json", encoding="utf-8") as j_file:
             framework = json.load(j_file)
     

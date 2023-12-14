@@ -49,14 +49,17 @@ def main(framework):
         opponent_arguments = {x for x in opponent_arguments if x not in proponent_used_arguments}
 
         if not opponent_arguments:
+            print('poep1')
             proponent_wins = True
             break
 
-        opponent_argument = get_user_input(opponent_arguments_copy, opponent_used_arguments) #quits if opponent reuses argument
+        opponent_argument = get_user_input(opponent_arguments_copy, opponent_used_arguments)
+        
         opponent_used_arguments.add(opponent_argument)
 
         # 1.3. Opponent loses if they use an argument that was previously used by proponent (again, this time by choice)
         if opponent_argument in proponent_used_arguments:
+            print('poep2')
             proponent_wins = True
             break
 
@@ -77,6 +80,9 @@ def main(framework):
         print(f"Proponent plays {proponent_argument} with argument '{arguments[str(proponent_argument)]}'")
         proponent_used_arguments.add(proponent_argument)
         count += 1
+        
+        
+    print("achterlijk")
     
     if opponent_wins:
         print(f"Opponent plays {opponent_argument} with argument '{arguments[str(opponent_argument)]}'")
@@ -86,7 +92,6 @@ def main(framework):
     elif proponent_wins and count > 0:
         print(f"Proponent plays {proponent_argument} with argument '{arguments[str(proponent_argument)]}'")
         print("Proponent wins!")
-
         
         
 if __name__ == "__main__":

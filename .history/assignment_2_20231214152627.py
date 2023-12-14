@@ -49,16 +49,19 @@ def main(framework):
         opponent_arguments = {x for x in opponent_arguments if x not in proponent_used_arguments}
 
         if not opponent_arguments:
+            print('poep1')
             proponent_wins = True
-            break
+            # break
 
-        opponent_argument = get_user_input(opponent_arguments_copy, opponent_used_arguments) #quits if opponent reuses argument
+        opponent_argument = get_user_input(opponent_arguments_copy, opponent_used_arguments)
+        
         opponent_used_arguments.add(opponent_argument)
 
         # 1.3. Opponent loses if they use an argument that was previously used by proponent (again, this time by choice)
         if opponent_argument in proponent_used_arguments:
+            print('poep2')
             proponent_wins = True
-            break
+            # break
 
         # 2. Proponent can use arguments that attack the opponent_argument in previous round
         proponent_arguments = {x for x,y in attacks if y == opponent_argument}
@@ -70,22 +73,25 @@ def main(framework):
         proponent_arguments = {x for x in proponent_arguments if x not in opponent_used_arguments}
         if not proponent_arguments:
             opponent_wins = True
-            break
+            # break
 
         # If set is not empty, plays random move from set of possible arguments
         proponent_argument = np.random.choice(list(proponent_arguments))
         print(f"Proponent plays {proponent_argument} with argument '{arguments[str(proponent_argument)]}'")
         proponent_used_arguments.add(proponent_argument)
         count += 1
+        
+        
     
-    if opponent_wins:
-        print(f"Opponent plays {opponent_argument} with argument '{arguments[str(opponent_argument)]}'")
-        print("Opponent wins!")
-    if proponent_wins and count == 0:
-        print("Proponent wins!")
-    elif proponent_wins and count > 0:
-        print(f"Proponent plays {proponent_argument} with argument '{arguments[str(proponent_argument)]}'")
-        print("Proponent wins!")
+    
+    # if opponent_wins:
+    #     print(f"Opponent plays {opponent_argument} with argument '{arguments[str(opponent_argument)]}'")
+    #     print("Opponent wins!")
+    # if proponent_wins and count == 0:
+    #     print("Proponent wins!")
+    # elif proponent_wins and count > 0:
+    #     print(f"Proponent plays {proponent_argument} with argument '{arguments[str(proponent_argument)]}'")
+    #     print("Proponent wins!")
 
         
         

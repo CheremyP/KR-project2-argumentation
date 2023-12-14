@@ -16,14 +16,14 @@ def get_user_input(possible_arguments, oponent_used_arguments):
     
     
 def main(framework):
-    arguments = framework["Arguments"]
-    print("Arguments")
-    for number, arg in arguments.items():
-        print(f"{number}: {arg}")
-    print("\n")
+    try:
+        attacks = framework["Attack Relations"]
+    except Exception as e:
+        print(f"Encountered exception: {e}. Ensure the attack relations in the .json file are called \"Attack Relations\"")
+        sys.exit()
         
-    attacks = framework["Attack Relations"]
     attacks = [[int(x), int(y)] for x,y in attacks] 
+
 
     opponent_wins, proponent_wins = False, False
     proponent_used_arguments = set()
@@ -32,13 +32,12 @@ def main(framework):
     # 0. Initialize with a proponent argument, select from flattened list of arguments
     all_possible_arguments = [number for sublist in attacks for number in sublist]
     proponent_argument = np.random.choice(all_possible_arguments)
-    proponent_argument = 0
+    # proponent_argument = 0
     proponent_used_arguments.add(proponent_argument)
 
     print(f"Proponent plays {proponent_argument}, with argument '{arguments[str(proponent_argument)]}'")
     count = 0
     while not proponent_wins and not opponent_wins:
-        print('ja')
         # 1. Opponent is allowed to use any argument that attacks arguments used by proponent
         opponent_arguments = {x for x,y in attacks if y in proponent_used_arguments}
         # 1.1. Make copy, since opponent should be allowed to choose argument that is already used by proponent
@@ -86,29 +85,60 @@ def main(framework):
     elif proponent_wins and count > 0:
         print(f"Proponent plays {proponent_argument} with argument '{arguments[str(proponent_argument)]}'")
         print("Proponent wins!")
-
         
         
 if __name__ == "__main__":
     # Extract command-line arguments
-    if len(sys.argv) == 2:
+    if len(sys.argv) == 3:
         valid_framework = False
+        valid_argument = False
+        framework_path = sys.argv[1] 
+        argument = sys.argv[2]
+        
         while valid_framework == False:
-            framework_path = sys.argv[1] 
             print(f"Loading framework {framework_path}")
             if not os.path.exists(framework_path):
-                print(f"{framework_path} does not exists. Please try again.")
+                framework_path = input(f"{framework_path} does not exist. Please enter a valid \"framework\".json: ") 
             else:
                 with open(framework_path, encoding="utf-8") as j_file:
                     framework = json.load(j_file)
-                valid_framework = True
+                valid_framework = True     
+                
+        # while not isinstance(argument, int):
+        #     print(f"The claimed argument should be an integer. {argument} is not an integer")
+        #     argument = input("Please input a valid integer:")
+        
 
-
-    elif len(sys.argv) != 2:
+    else:
         print("\nLoading default framework example_framework.json\n")
-        with open("example-argumentation-framework.json", encoding="utf-8") as j_file:
+        with open("example_framework.json", encoding="utf-8") as j_file:
             framework = json.load(j_file)
+            
     
+    arguments = framework["Arguments"]
+    print("Arguments")
+    for number, arg in arguments.items():
+        print(f"{number}: {arg}")
+    print("\n")   
+    
+    all_possible_arguments = [int(x) for x in arguments.keys()]        
+
+
+    if len(sys.argv) == 3:
+        while True:
+            argument = input("Enter an integer argument from the set {}:".format(all_possible_arguments))
+
+            try:
+                argument = int(argument)
+
+                if argument in all_possible_arguments:
+                    break
+                else:
+                    print("Argument is not in the set of possible arguments. Try again.")
+            except ValueError:
+                print("Input is not an integer. Please enter a valid integer.")
+
+        
 
     main(framework)
     
